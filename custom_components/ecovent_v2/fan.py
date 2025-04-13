@@ -133,6 +133,11 @@ class VentoExpertFan(CoordinatorEntity, FanEntity):
         return self._fan.airflow == "heat_recovery"
 
     @property
+    def schedule_state(self) -> bool:
+        """Scheduling state (active: true / false)."""
+        return self._fan.weekly_schedule_state
+
+    @property
     def boost_time(self) -> int:
         """Boost time."""
         return self._fan.boost_time
@@ -211,7 +216,10 @@ class VentoExpertFan(CoordinatorEntity, FanEntity):
         await self.coordinator.async_refresh()
         # self.schedule_update_ha_state()
 
-        # Custom services
+    # Custom services
+    def set_schedule_state(self, active: bool) -> None:
+        """Activate or deactivate scheduler."""
+        self._fan.weekly_schedule_state(active)
 
     # Reset filter timer
     async def async_reset_filter_timer(self, fan_target) -> None:
