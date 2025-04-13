@@ -59,6 +59,18 @@ async def async_setup_entry(
                 "mdi:switch",
                 False,
             ),
+            VentoSwitch(
+                hass,
+                config,
+                "_schedule_state",
+                "schedule_state",
+                SwitchDeviceClass.SWITCH,
+                False,
+                EntityCategory.CONFIG,
+                True,
+                "mdi:switch",
+                False,
+            ),
         ]
     )
 
@@ -122,6 +134,10 @@ class VentoSwitch(CoordinatorEntity, SwitchEntity):
     def analogV_sensor_state(self):
         """Analog Voltage sensor state."""
         return self._fan.analogV_sensor_state
+
+    def schedule_state(self):
+        """Scheduling state."""
+        return self._fan.weekly_schedule_state
 
     @property
     def is_on(self) -> bool | None:

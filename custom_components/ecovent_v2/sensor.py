@@ -122,6 +122,18 @@ async def async_setup_entry(
                 False,
                 "mdi:flash",
             ),
+           VentoSensor(
+                hass,
+                config,
+                "_scheduling",
+                "scheduling",
+                None,
+                None,
+                None,
+                EntityCategory.DIAGNOSTIC,
+                False,
+                "mdi:flash",
+            ),
             VentoSensor(
                 hass,
                 config,
@@ -275,6 +287,10 @@ class VentoSensor(CoordinatorEntity, SensorEntity):
     def analogv(self):
         """Get analog Voltage value."""
         return self._fan.analogV
+
+    def scheduling(self):
+        """Schow if scheduling is active."""
+        return self._fan.schedule_state
 
     def current_wifi_ip(self):
         """Get current wifi IP value."""
